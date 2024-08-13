@@ -1,0 +1,9 @@
+.section-container {
+  height: 79vh;
+  overflow-y: auto;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4a90e2 #f5f5f5;
+}
