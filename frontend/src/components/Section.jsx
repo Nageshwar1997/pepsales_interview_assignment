@@ -6,6 +6,7 @@ import { useDrop } from "react-dnd";
 import toast from "react-hot-toast";
 import { useContext } from "react";
 import Context from "../context/index.context";
+import SummaryApi from "../common/index.api";
 
 const Section = ({ status }) => {
   const { fetchTodos } = useContext(Context);
@@ -14,18 +15,15 @@ const Section = ({ status }) => {
 
   const addItemToSection = async (id) => {
     try {
-      const response = await fetch(
-        `https://pepsales-interview-assignment-backend.vercel.app/todos/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            status: status,
-          }),
-        }
-      );
+      const response = await fetch(`${SummaryApi.updateTodo.url}/${id}`, {
+        method: SummaryApi.updateTodo.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: status,
+        }),
+      });
 
       if (response.ok) {
         fetchTodos();
@@ -41,7 +39,7 @@ const Section = ({ status }) => {
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "task",
-    drop: (item) => addItemToSection(item.id),
+    drop: (item) => addItemToSection(item._id),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -82,7 +80,7 @@ const Section = ({ status }) => {
       <div className="mt-4">
         {tasksToMap &&
           tasksToMap.map((task, index) => (
-            <Task key={index + task.id} task={task} />
+            <Task key={index + task._id} task={task} />
           ))}
       </div>
     </div>

@@ -10,15 +10,17 @@ import { Toaster } from "react-hot-toast";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import SummaryApi from "./common/index.api";
 
 function App() {
   const dispatch = useDispatch();
-
   const fetchTodos = async () => {
-    const response = await fetch(
-      "https://pepsales-interview-assignment-backend.vercel.app/todos"
-    );
-    const data = await response.json();
+    const response = await fetch(SummaryApi.getAllTodos.url, {
+      method: SummaryApi.getAllTodos.method,
+    });
+
+    const apiResponse = await response.json();
+    const data = apiResponse.todos;
 
     const todoResponse = await data.filter((todo) => todo.status === "todos");
     dispatch(setTodos(todoResponse));

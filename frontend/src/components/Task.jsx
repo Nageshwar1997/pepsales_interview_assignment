@@ -3,13 +3,14 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 import Context from "../context/index.context";
 import { useDrag } from "react-dnd";
+import SummaryApi from "../common/index.api";
 
 const Task = ({ task }) => {
   const { fetchTodos } = useContext(Context);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "task",
-    item: { id: task.id },
+    item: { _id: task._id },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -17,8 +18,8 @@ const Task = ({ task }) => {
 
   const handleRemove = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/todos/${id}`, {
-        method: "DELETE",
+      const response = await fetch(`${SummaryApi.deleteTodo.url}/${id}`, {
+        method: SummaryApi.deleteTodo.method,
       });
 
       if (response.ok) {
@@ -44,7 +45,7 @@ const Task = ({ task }) => {
       <p className="text-lg">{task?.name}</p>
       <button
         className="text-slate-400 hover:text-red-500 transition-colors"
-        onClick={() => handleRemove(task.id)}
+        onClick={() => handleRemove(task._id)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

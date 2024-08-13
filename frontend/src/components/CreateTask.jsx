@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Context from "../context/index.context";
+import SummaryApi from "../common/index.api";
 
 const CreateTask = () => {
   const { fetchTodos } = useContext(Context);
@@ -17,16 +18,13 @@ const CreateTask = () => {
     }
 
     try {
-      const response = await fetch(
-        "https://pepsales-interview-assignment-backend.vercel.app/todos",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(task),
-        }
-      );
+      const response = await fetch(SummaryApi.createTodo.url, {
+        method: SummaryApi.createTodo.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(task),
+      });
 
       if (response.ok) {
         toast.success("Task created successfully");
