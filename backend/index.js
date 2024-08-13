@@ -9,7 +9,9 @@ const TodoModel = require("./models/createTodo.model");
 const app = express();
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin:
+      process.env.FRONTEND_URL ||
+      "https://pepsales-interview-assignment-frontend.vercel.app",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
