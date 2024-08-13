@@ -1,6 +1,6 @@
 const process = {
   env: {
-    BACKEND_URL: "http://localhost:8080",
+    BACKEND_URL: "https://pepsales-interview-assignment.vercel.app" || "http://localhost:8080",
   },
 };
 
